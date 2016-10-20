@@ -1,5 +1,7 @@
 # Simple-LoRaWAN
-C++ wrapper for the IBM LMIC LoRaWAN implementation
+C++ wrapper for the IBM LMIC LoRaWAN implementation.
+
+Mbed Library: [https://developer.mbed.org/users/sillevl/code/Simple-LoRaWAN/](https://developer.mbed.org/users/sillevl/code/Simple-LoRaWAN/)
 
 ## Examples
 
