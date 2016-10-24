@@ -59,6 +59,11 @@ void Node::init()
 
 void Node::send(char* data, int size)
 {
+    send((uint8_t*) data, size);
+}
+
+void Node::send(uint8_t* data, int size)
+{
     memcpy (LMIC.frame, data, size);
     LMIC_setTxData2(15, LMIC.frame, size, 0);
 }
