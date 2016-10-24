@@ -36,6 +36,7 @@ public:
     Node();
     virtual ~Node();
     void send(char* data, int size);
+    void send(uint8_t* data, int size);
     static void onEvent(ev_t ev);
     void process();
 
