@@ -44,6 +44,8 @@ public:
     void disableLinkCheck();
     void setLinkCheck(int state);
 
+    void setSpreadFactor(int spreadfactor);
+
 private:
     void init();
     void setLinkCheck();

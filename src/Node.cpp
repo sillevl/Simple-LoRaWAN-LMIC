@@ -53,7 +53,7 @@ void Node::init()
 
     // reset MAC state
     LMIC_reset();
-    LMIC_setDrTxpow(DR_SF7, 14);
+    setSpreadFactor(DR_SF7);
 }
 
 
@@ -103,6 +103,11 @@ void Node::disableLinkCheck()
 void Node::setLinkCheck(int state)
 {
     LMIC_setLinkCheckMode(state);
+}
+
+void Node::setSpreadFactor(int spreadfactor)
+{
+    LMIC_setDrTxpow(spreadfactor, 14);
 }
 
 
