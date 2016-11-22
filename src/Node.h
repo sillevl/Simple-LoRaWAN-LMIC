@@ -24,8 +24,14 @@
 #ifndef SIMPLE_LORAWAN_NODE_H_
 #define SIMPLE_LORAWAN_NODE_H_
 
+#define RFM95_RESET_CONNECTED 1  // define if p15 is connected to RFM95W reset
+
 #include "lmic.h"
 #include "stdint.h"
+
+#ifdef RFM95_RESET_CONNECTED
+#include "mbed.h"
+#endif
 
 namespace SimpleLoRaWAN
 {
@@ -49,6 +55,9 @@ public:
 private:
     void init();
     void setLinkCheck();
+#ifdef RFM95_RESET_CONNECTED
+    DigitalOut rfm95wReset;
+#endif
 };
 
 } /* namespace SimpleLoRaWAN */

@@ -37,8 +37,14 @@ void onEvent(ev_t ev)
 namespace SimpleLoRaWAN
 {
 
-Node::Node()
+Node::Node():rfm95wReset(p15)
 {
+#ifdef RFM95_RESET_CONNECTED
+    rfm95wReset = 0;
+    wait_ms(10);
+    rfm95wReset = 1;
+    wait_ms(10);
+#endif
     init();
 }
 
