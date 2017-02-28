@@ -24,7 +24,7 @@
 #ifndef SIMPLE_LORAWAN_NODE_H_
 #define SIMPLE_LORAWAN_NODE_H_
 
-#define RFM95_RESET_CONNECTED 1  // define if p15 is connected to RFM95W reset
+//#define RFM95_RESET_CONNECTED 1  // define if p15 is connected to RFM95W reset
 
 #include "lmic.h"
 #include "stdint.h"
