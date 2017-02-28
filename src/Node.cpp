@@ -25,13 +25,17 @@
 #include <Node.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
+//#include <algorithm>
 
-void onEvent(ev_t ev)
+std::vector<SimpleLoRaWAN::Node*> _nodeInstances;
+
+void onEvent(ev_t event)
 {
-    SimpleLoRaWAN::Node::onEvent(ev);
+    for(int i = 0; i != _nodeInstances.size(); i++) {
+        _nodeInstances[i]->onEvent(event);
+    }
 }
-
-
 
 
 namespace SimpleLoRaWAN
@@ -46,11 +50,13 @@ Node::Node()
     wait_ms(10);
 #endif
     init();
+    _nodeInstances.push_back(this);
 }
 
 Node::~Node()
 {
-
+    //int index = find(_nodeInstances.begin(), _nodeInstances.end(), this) - _nodeInstances.begin();
+    //_nodeInstances.erase(_nodeInstances.begin() +index);
 }
 
 void Node::init()
@@ -75,20 +81,23 @@ void Node::send(uint8_t* data, int size)
 }
 
 
-void Node::onEvent(ev_t ev)
+void Node::onEvent(ev_t event)
 {
-    printf("Event (%d)!!!\r\n", ev);
-    switch(ev) {
-        case EV_JOINED:
-            printf("JOINED\n\r");
-            LMIC_setLinkCheckMode(0); // Link check is currently not implemented for TTN, so just disable it
-            break;
-        case EV_TXCOMPLETE:
-            printf("TXCOMPLETE\n\r");
-            break;
-        default:
-            break;
+
+    //  EV_SCAN_TIMEOUT=1, EV_BEACON_FOUND,
+    //  EV_BEACON_MISSED, EV_BEACON_TRACKED, EV_JOINING,
+    //  EV_JOINED, EV_RFU1, EV_JOIN_FAILED, EV_REJOIN_FAILED,
+    //  EV_TXCOMPLETE, EV_LOST_TSYNC, EV_RESET,
+    //  EV_RXCOMPLETE, EV_LINK_DEAD, EV_LINK_ALIVE
+
+    if(eventHandler != NULL){
+        eventHandler(event);
     }
+}
+
+void Node::setEventHandler(void (*fnc)(ev_t))
+{
+    eventHandler = fnc;
 }
 
 void Node::process()

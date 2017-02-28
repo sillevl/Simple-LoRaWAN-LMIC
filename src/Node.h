@@ -43,8 +43,10 @@ public:
     virtual ~Node();
     void send(char* data, int size);
     void send(uint8_t* data, int size);
-    static void onEvent(ev_t ev);
+    void onEvent(ev_t event);
     void process();
+
+    void setEventHandler(void (*fnc)(ev_t));
 
     void enableLinkCheck();
     void disableLinkCheck();
@@ -52,12 +54,16 @@ public:
 
     void setSpreadFactor(int spreadfactor);
 
+
 private:
     void init();
     void setLinkCheck();
 #ifdef RFM95_RESET_CONNECTED
     DigitalOut rfm95wReset;
 #endif
+
+    void (*eventHandler)(ev_t);
+
 };
 
 } /* namespace SimpleLoRaWAN */
