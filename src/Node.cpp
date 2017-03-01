@@ -93,11 +93,132 @@ void Node::onEvent(ev_t event)
     if(eventHandler != NULL){
         eventHandler(event);
     }
+
+    switch(event) {
+        case EV_SCAN_TIMEOUT:
+            scanTimeoutEventHandler();
+            break;
+        case EV_BEACON_FOUND:
+            beaconFoundEventHandler();
+            break;
+        case EV_BEACON_MISSED:
+            beaconMissedEventHandler();
+            break;
+        case EV_BEACON_TRACKED:
+            beaconTrackedEventHandler();
+            break;
+        case EV_JOINING:
+            joiningEventHandler();
+            break;
+        case EV_JOINED:
+            joinedEventHandler();
+            break;
+        case EV_RFU1:
+            rfu1EventHandler();
+            break;
+        case EV_JOIN_FAILED:
+            joinFailedEventHandler();
+            break;
+        case EV_REJOIN_FAILED:
+            rejoinFailedEventHandler();
+            break;
+        case EV_TXCOMPLETE:
+            txCompleteEventHandler();
+            break;
+        case EV_LOST_TSYNC:
+            lostTsyncEventHandler();
+            break;
+        case EV_RESET:
+            resetEventHandler();
+            break;
+        case EV_RXCOMPLETE:
+            rxCompleteEventHandler();
+            break;
+        case EV_LINK_DEAD:
+            linkDeadEventHandler();
+            break;
+        case EV_LINK_ALIVE:
+            linkAliveEventHandler();
+            break;
+         default:
+            // Unknown event
+            break;
+    }
 }
 
 void Node::setEventHandler(void (*fnc)(ev_t))
 {
     eventHandler = fnc;
+}
+
+void Node::setScanTimeoutEventHandler(void (*fnc)())
+{
+    scanTimeoutEventHandler = fnc;
+}
+
+void Node::setBeaconFoundEventHandler(void (*fnc)())
+{
+    beaconFoundEventHandler = fnc;
+}
+
+void Node::setBeaconMissedEventHandler(void (*fnc)())
+{
+    beaconMissedEventHandler = fnc;
+}
+
+void Node::setBeaconTrackedEventHandler(void (*fnc)())
+{
+    beaconTrackedEventHandler = fnc;
+}
+
+void Node::setJoiningEventHandler(void (*fnc)())
+{
+    joiningEventHandler = fnc;
+}
+
+void Node::setJoinedEventHandler(void (*fnc)())
+{
+    joinedEventHandler = fnc;
+}
+
+void Node::setRfu1EventHandler(void (*fnc)())
+{
+    rfu1EventHandler = fnc;
+}
+
+void Node::setJoinFailedEventHandler(void (*fnc)())
+{
+    joinFailedEventHandler = fnc;
+}
+
+void Node::setRejoinFailedEventHandler(void (*fnc)())
+{
+    rejoinFailedEventHandler = fnc;
+}
+
+void Node::setTxCompleteEventHandler(void (*fnc)())
+{
+    txCompleteEventHandler = fnc;
+}
+
+void Node::setResetEventHandler(void (*fnc)())
+{
+    resetEventHandler = fnc;
+}
+
+void Node::setRxCompleteEventHandler(void (*fnc)())
+{
+    rxCompleteEventHandler = fnc;
+}
+
+void Node::setLinkDeadEventHandler(void (*fnc)())
+{
+    linkDeadEventHandler = fnc;
+}
+
+void Node::setLinkAliveEventHandler(void (*fnc)())
+{
+    linkAliveEventHandler = fnc;
 }
 
 void Node::process()

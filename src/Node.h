@@ -47,6 +47,20 @@ public:
     void process();
 
     void setEventHandler(void (*fnc)(ev_t));
+    void setScanTimeoutEventHandler(void (*fnc)());
+    void setBeaconFoundEventHandler(void (*fnc)());
+    void setBeaconMissedEventHandler(void (*fnc)());
+    void setBeaconTrackedEventHandler(void (*fnc)());
+    void setJoiningEventHandler(void (*fnc)());
+    void setJoinedEventHandler(void (*fnc)());
+    void setRfu1EventHandler(void (*fnc)());
+    void setJoinFailedEventHandler(void (*fnc)());
+    void setRejoinFailedEventHandler(void (*fnc)());
+    void setTxCompleteEventHandler(void (*fnc)());
+    void setResetEventHandler(void (*fnc)());
+    void setRxCompleteEventHandler(void (*fnc)());
+    void setLinkDeadEventHandler(void (*fnc)());
+    void setLinkAliveEventHandler(void (*fnc)());
 
     void enableLinkCheck();
     void disableLinkCheck();
@@ -63,6 +77,22 @@ private:
 #endif
 
     void (*eventHandler)(ev_t);
+    void (*scanTimeoutEventHandler)();
+    void (*beaconFoundEventHandler)();
+    void (*beaconMissedEventHandler)();
+    void (*beaconTrackedEventHandler)();
+    void (*joiningEventHandler)();
+    void (*joinedEventHandler)();
+    void (*rfu1EventHandler)();
+    void (*joinFailedEventHandler)();
+    void (*rejoinFailedEventHandler)();
+    void (*txCompleteEventHandler)();
+    void (*lostTsyncEventHandler)();
+    void (*resetEventHandler)();
+    void (*rxCompleteEventHandler)();
+    void (*linkDeadEventHandler)();
+    void (*linkAliveEventHandler)();
+
 
 };
 
