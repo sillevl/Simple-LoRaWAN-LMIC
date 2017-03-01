@@ -69,15 +69,25 @@ void Node::init()
 }
 
 
-void Node::send(char* data, int size)
+void Node::send(char* data, int size, bool acknowledge)
 {
-    send((uint8_t*) data, size);
+    send(1, (uint8_t*) data, size, acknowledge);
 }
 
-void Node::send(uint8_t* data, int size)
+void Node::send(unsigned char port, char* data, int size, bool acknowledge)
+{
+    send(port, (uint8_t*) data, size, acknowledge);
+}
+
+void Node::send(uint8_t* data, int size, bool acknowledge)
+{
+    send(1, data, size, acknowledge);
+}
+
+void Node::send(unsigned char port, uint8_t* data, int size, bool acknowledge)
 {
     memcpy (LMIC.frame, data, size);
-    LMIC_setTxData2(15, LMIC.frame, size, 0);
+    LMIC_setTxData2(port, LMIC.frame, size, acknowledge);
 }
 
 
@@ -117,6 +127,11 @@ void Node::onEvent(ev_t event)
             rejoinFailedEventHandler();
             break;
         case EV_TXCOMPLETE:
+            // TODO: 
+            if (LMIC.txrxFlags & TXRX_ACK){             // needs ACK and gets ACK
+            } else if(LMIC.txrxFlags & TXRX_NACK) {     // needs ACK and gets NO ACK
+            } else {                                    // needs no ACK
+            }
             txCompleteEventHandler();
             break;
         case EV_LOST_TSYNC:
