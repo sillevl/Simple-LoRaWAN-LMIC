@@ -84,12 +84,6 @@ void Node::send(uint8_t* data, int size)
 void Node::onEvent(ev_t event)
 {
 
-    //  EV_SCAN_TIMEOUT=1, EV_BEACON_FOUND,
-    //  EV_BEACON_MISSED, EV_BEACON_TRACKED, EV_JOINING,
-    //  EV_JOINED, EV_RFU1, EV_JOIN_FAILED, EV_REJOIN_FAILED,
-    //  EV_TXCOMPLETE, EV_LOST_TSYNC, EV_RESET,
-    //  EV_RXCOMPLETE, EV_LINK_DEAD, EV_LINK_ALIVE
-
     if(eventHandler != NULL){
         eventHandler(event);
     }
