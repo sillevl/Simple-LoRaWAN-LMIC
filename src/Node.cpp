@@ -78,9 +78,8 @@ Node::Node()
     receiveHandler = NULL;
 
     log->debug("Creating Simple-LoRaWAN node");
-    // log->debug("Creating Simple-LoRaWAN node");
-    // log->debug("Creating Simple-LoRaWAN node");
-    // log->debug("Creating Simple-LoRaWAN node");
+
+    processThread = new Thread(processTask, this);
 }
 
 Node::~Node()
@@ -198,6 +197,7 @@ void Node::onEvent(ev_t event)
               uint8_t buffer[MAX_LEN_FRAME];
               memcpy (buffer, LMIC.frame + LMIC.dataBeg, LMIC.dataLen);
               uint8_t port = (LMIC.txrxFlags & TXRX_PORT) ? LMIC.frame[LMIC.dataBeg-1] : 0;
+              log->info("Data payload received");
               log->debug("Received %d bytes of payload on port %d", LMIC.dataLen, port);
               receiveHandler(port, buffer, LMIC.dataLen);
             } else {
@@ -349,6 +349,17 @@ void Node::setReceiveHandler(void (*fnc)(uint8_t, uint8_t*, uint8_t))
 void Node::process()
 {
     os_runloop_once();
+}
+
+void Node::processTask(void const *argument)
+{
+    Node* self = (Node*)argument;
+
+    while(true)
+    {
+        self->process();
+        Thread::yield();
+    }
 }
 
 void Node::enableLinkCheck()

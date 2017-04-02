@@ -29,6 +29,7 @@
 #include "lmic.h"
 #include "stdint.h"
 #include "LogIt.h"
+#include "rtos.h"
 
 #ifdef RFM95_RESET_CONNECTED
 #include "mbed.h"
@@ -103,6 +104,9 @@ private:
     void (*receiveHandler)(uint8_t, uint8_t*, uint8_t);
 
     LogIt* log;
+
+    Thread* processThread;
+    static void processTask(void const *argument);
 };
 
 } /* namespace SimpleLoRaWAN */
