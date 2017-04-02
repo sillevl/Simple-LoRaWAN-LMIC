@@ -26,13 +26,14 @@
 
 namespace SimpleLoRaWAN
 {
-    
+
 namespace ABP
 {
-    
+
 Node::Node(uint32_t _dev_addr, uint8_t _nwks_key[], uint8_t _app_key[]) : SimpleLoRaWAN::Node()
 {
     LMIC_setSession (0x1, _dev_addr, _nwks_key, _app_key);   // 1st argument: net_id
+    LMIC.dn2Dr = DR_SF9;
     //while(LMIC.devaddr == 0){
     process();
     //};

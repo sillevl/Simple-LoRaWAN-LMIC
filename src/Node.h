@@ -28,6 +28,7 @@
 
 #include "lmic.h"
 #include "stdint.h"
+#include "LogIt.h"
 
 #ifdef RFM95_RESET_CONNECTED
 #include "mbed.h"
@@ -45,6 +46,9 @@ public:
     void send(unsigned char port, char* data, int size, bool acknowledge = false);
     void send(uint8_t* data, int size, bool acknowledge = false);
     void send(unsigned char port, uint8_t* data, int size, bool acknowledge = false);
+
+    void setReceiveHandler(void (*fnc)(uint8_t port, uint8_t* data, uint8_t length));
+
     void onEvent(ev_t event);
     void process();
 
@@ -59,6 +63,7 @@ public:
     void setJoinFailedEventHandler(void (*fnc)());
     void setRejoinFailedEventHandler(void (*fnc)());
     void setTxCompleteEventHandler(void (*fnc)());
+    void setLostTSyncEventHandler(void (*fnc)());
     void setResetEventHandler(void (*fnc)());
     void setRxCompleteEventHandler(void (*fnc)());
     void setLinkDeadEventHandler(void (*fnc)());
@@ -70,6 +75,7 @@ public:
 
     void setSpreadFactor(int spreadfactor);
 
+    int timeUntilNextSend();
 
 private:
     void init();
@@ -94,8 +100,9 @@ private:
     void (*rxCompleteEventHandler)();
     void (*linkDeadEventHandler)();
     void (*linkAliveEventHandler)();
+    void (*receiveHandler)(uint8_t, uint8_t*, uint8_t);
 
-
+    LogIt* log;
 };
 
 } /* namespace SimpleLoRaWAN */
